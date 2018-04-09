@@ -32,6 +32,19 @@ function lightsensing(){
 }	//wait
 </script>
 ```
+AJAX provides the bridge between the server and the client in an easy and dynamic way. It allows us to run PHP scripts which can handle server side files such as the light sensor values and position - both stored in text files. PHP was the second major language utilised in this project to open, read and then close the storage text files. Below is a sample PHP script:
+
+```php
+<?php
+	$myfile = fopen("position.txt","r") or die("Unable to open file!");
+	$value = fread($myfile, filesize("position.txt"));
+	echo json_encode($value);
+	fclose($myfile);
+?>
+```
+
+An interesting note about this script in particular, is that JSON_encode needed to be used on the object value being produced by the PHP script. This caused confusion when processing the variable wiht JavaScript so it neeeded to be transformed into a simple JSON fortmat in order to be used.
+
 
 ### Graphical Demonstration
 
