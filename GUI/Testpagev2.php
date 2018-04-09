@@ -78,7 +78,7 @@ body {
 p.intro {
 	color: white;
 	text-shadow: 1px 1px 5px black, 0 0 25px green, 0 0 5px lawngreen;
-	front-size: 2.5em;
+	font-size: 1.2em;
 	text-align: center;
 }
 
