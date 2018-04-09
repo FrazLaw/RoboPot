@@ -45,6 +45,8 @@ AJAX provides the bridge between the server and the client in an easy and dynami
 
 An interesting note about this script in particular, is that JSON_encode needed to be used on the object value being produced by the PHP script. This caused confusion when processing the variable wiht JavaScript so it neeeded to be transformed into a simple JSON fortmat in order to be used.
 
+Languages used:
+PHP, JavaScript, HTML, CSS.
 
 ### Graphical Demonstration
 
