@@ -83,89 +83,89 @@ char Location::Find_Pot()
 int Location::Find_Direction()
 {
 
-using namespace std;
+	using namespace std;
 
-int LSM303AGR::getFileDescriptor()
-{
-	cout << fd << endl;
-	return fd;
+	int LSM303AGR::getFileDescriptor()
+	{
+		cout << fd << endl;
+		return fd;
 
-}
-
-int LSM303AGR::dataAvailable(){
-	int status;
-	status = wiringPiI2CReadReg8(fd,STATUS_REG_M);//data output X register, not really a status reg
-	cout << status << endl;
-}
-
-int LSM303AGR::configure(){
-	alastair = wiringPiI2CWriteReg8(fd, CFG_REG_A_M, 0x00);//configure with default settings
-}
-
-int LSM303AGR::readCh1(){
-	msbX = wiringPiI2CReadReg8(fd, OUTX_H_REG_M);//68h and 69h for X output registers, 69 is MSB(?)
-	lsbX = wiringPiI2CReadReg8(fd, OUTX_L_REG_M);
-	xresult = (msbX<<8 | lsbX);//the value is a 16-bit signed integer. Therefore, shift the 8 bits read before (msbX) and input the latter 8 bits on the end.
-
-	return xresult;
-}
-
-int LSM303AGR::readCh2(){
-	msbY = wiringPiI2CReadReg8(fd, OUTY_H_REG_M);//6Ah and 6Bh for y output registers,
-	lsbY = wiringPiI2CReadReg8(fd, OUTY_L_REG_M);
-	yresult = (msbY << 8) | (lsbY);
-
-	return yresult;
-}
-
-int main(){
-
-LSM303AGR lsm;
-ofstream magneto;
-	
-lsm.configure();
-	
-	for (int i = 0; i<100000; i++){//number of output checks
-		
-		int sum = 0;
-		float average = 0;
-		float compass[10];
-		float direction; //compass coordingate
-
-		for (int j = 0; j < 10; j++){//number of averages, 10 seems to be max
-			
-			float x = lsm.readCh1()-307;//to centre the plot around 0. It performs as expected with few errors
-
-			float y = lsm.readCh2();
-
-
-			float coord = x/y;
-
-			if (y > 0){
-				direction = 90 - atan(coord)*(180/PI);
-				compass[j] = direction;
-			} else if (y < 0){
-				direction = 270 - atan(coord)*(180/PI);
-				compass[j] = direction;
-			} else if (y == 0 && x < 0){
-				direction = 180;
-				compass[j] = direction;
-			} else if (y == 0 && x > 0){
-				direction = 0;
-				compass[j] = direction;
-			} else {
-				printf("Direction = error\n");
-			}
-		sum += compass[j];
-		}
-	average = sum/10;
-	cout << "average direction = " << average << endl;
-	magneto.open("magneto.txt");
-	magneto << average;
-	magneto.close();
 	}
 
-}
+	int LSM303AGR::dataAvailable(){
+		int status;
+		status = wiringPiI2CReadReg8(fd,STATUS_REG_M);//data output X register, not really a status reg
+		cout << status << endl;
+	}
+
+	int LSM303AGR::configure(){
+		alastair = wiringPiI2CWriteReg8(fd, CFG_REG_A_M, 0x00);//configure with default settings
+	}
+
+	int LSM303AGR::readCh1(){
+		msbX = wiringPiI2CReadReg8(fd, OUTX_H_REG_M);//68h and 69h for X output registers, 69 is MSB(?)
+		lsbX = wiringPiI2CReadReg8(fd, OUTX_L_REG_M);
+		xresult = (msbX<<8 | lsbX);//the value is a 16-bit signed integer. Therefore, shift the 8 bits read before (msbX) and input the latter 8 bits on the end.
+
+		return xresult;
+	}
+
+	int LSM303AGR::readCh2(){
+		msbY = wiringPiI2CReadReg8(fd, OUTY_H_REG_M);//6Ah and 6Bh for y output registers,
+		lsbY = wiringPiI2CReadReg8(fd, OUTY_L_REG_M);
+		yresult = (msbY << 8) | (lsbY);
+
+		return yresult;
+	}
+
+	int main(){
+
+	LSM303AGR lsm;
+	ofstream magneto;
+
+	lsm.configure();
+
+		for (int i = 0; i<100000; i++){//number of output checks
+
+			int sum = 0;
+			float average = 0;
+			float compass[10];
+			float direction; //compass coordingate
+
+			for (int j = 0; j < 10; j++){//number of averages, 10 seems to be max
+
+				float x = lsm.readCh1()-307;//to centre the plot around 0. It performs as expected with few errors
+
+				float y = lsm.readCh2();
+
+
+				float coord = x/y;
+
+				if (y > 0){
+					direction = 90 - atan(coord)*(180/PI);
+					compass[j] = direction;
+				} else if (y < 0){
+					direction = 270 - atan(coord)*(180/PI);
+					compass[j] = direction;
+				} else if (y == 0 && x < 0){
+					direction = 180;
+					compass[j] = direction;
+				} else if (y == 0 && x > 0){
+					direction = 0;
+					compass[j] = direction;
+				} else {
+					printf("Direction = error\n");
+				}
+			sum += compass[j];
+			}
+		average = sum/10;
+		cout << "average direction = " << average << endl;
+		magneto.open("magneto.txt");
+		magneto << average;
+		magneto.close();
+		}
+
+	}
 
 }
 
