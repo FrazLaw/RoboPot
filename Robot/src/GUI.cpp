@@ -24,7 +24,7 @@ char GUI::Read_Cmd(const std::string& filename)
 {
 	std::ifstream file(filename.c_str());
 	file.get(cmd);
-	remove(filename.c_str());
+//	remove(filename.c_str());
 	return cmd;
 }
 

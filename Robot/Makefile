@@ -1,11 +1,11 @@
-CC = g++ -pthread -lncurses
-CC2=gcc
+CC = g++ -pthread
+CC2 = gcc
 
 TARGET = Go_Robopot
 
-INC = -lwiringPi -LGUI -LLocation -LMove -LProject_Config
+INC = -lwiringPi -lpthread -LGUI -LLocation -LMove -LProject_Config
 
-Proj_Dir = /home/pi/Robopot/Robot
+Proj_Dir = /home/teamrobopot/RoboPot/Robot
 
 INCLUDES = \
 	-I$(Proj_Dir) \
@@ -42,8 +42,8 @@ $(TARGET): $(OBJ)
 	$(CC) $(INC) $(INCLUDES) $^ -o $@
 
 main.o: main.cpp
-	$(CC) -c $(INC) $(INCLUDES) $^ -o $@	
-	
+	$(CC) -c $(INC) $(INCLUDES) $^ -o $@
+
 GUI.o: GUI.cpp
 	$(CC) -c $(INC) $(INCLUDES) $^ -o $@
 

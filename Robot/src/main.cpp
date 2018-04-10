@@ -25,7 +25,7 @@ int main()
 	Move motors;
 	Location loc;
 	
-	char Pot_Location = 'a'; //Initialise Pot Location to 'a'
+	char Pot_Location = 'A'; //Initialise Pot Location to 'a'
 	char Destination; // Declare destination variable
 	int X_Bearing;	//// Declare x bearing variable for location class
 	int Y_Bearing;	// Declare y bearing variable for location class
@@ -39,7 +39,7 @@ int main()
 		if ( interface.Check_Cmd(cmdfile) == true)	//If destination is sent from GUI
 		{
 			Destination = interface.Read_Cmd(cmdfile);	//Read destination
-			Pot_Location = loc.Find_Pot();			//Measure position
+			//Pot_Location = loc.Find_Pot();			//Measure position
 			if ( Destination != Pot_Location)	//If Destination is different from present location
 			{
 				loc.Find_Path(Destination, Pot_Location); //Determine path to destination
@@ -65,6 +65,6 @@ int main()
 				}
 			}
 		}
-`	}//Close while loop
+	}//Close while loop
 
 } // End main
