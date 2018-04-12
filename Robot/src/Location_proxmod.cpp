@@ -16,7 +16,7 @@ int Location::Setup()
 
 char Location::Find_Pot()
 {
-	
+/*	
 	int x,y;
 	int Proximity_North;
 	int Proximity_East;
@@ -52,17 +52,50 @@ char Location::Find_Pot()
 	
 	
 	return Location_ref[x][y];
-	
+*/	
 
 	return 'a';
 }
 
 int Location::Find_Direction()
 {
+/*
+	//using namespace std;
+
+	int LSM303AGR::getFileDescriptor()
+	{
+		//cout << fd << endl;
+		return fd;
+
+	}
+
+	int LSM303AGR::configure(){
+		alastair = wiringPiI2CWriteReg8(fd, CFG_REG_A_M, 0x00);//configure with default settings
+	}
+
+	int LSM303AGR::readCh1(){
+		msbX = wiringPiI2CReadReg8(fd, OUTX_H_REG_M);//68h and 69h for X output registers, 69 is MSB(?)
+		lsbX = wiringPiI2CReadReg8(fd, OUTX_L_REG_M);
+		xresult = (msbX<<8 | lsbX);//the value is a 16-bit signed integer. Therefore, shift the 8 bits read before (msbX) and input the latter 8 bits on the end.
+		return xresult;
+	}
+
+	int LSM303AGR::readCh2(){
+		msbY = wiringPiI2CReadReg8(fd, OUTY_H_REG_M);//6Ah and 6Bh for y output registers,
+		lsbY = wiringPiI2CReadReg8(fd, OUTY_L_REG_M);
+		yresult = (msbY << 8) | (lsbY);
+		return yresult;
+	}
+
+	//int main(){
 
 	LSM303AGR lsm;
-	//lsm.setup();
+	ofstream magneto;
+
 	lsm.configure();
+
+		for (int i = 0; i<100000; i++){//number of output checks
+
 			int sum = 0;
 			float average = 0;
 			float compass[10];
@@ -71,7 +104,10 @@ int Location::Find_Direction()
 			for (int j = 0; j < 10; j++){//number of averages, 10 seems to be max
 
 				float x = lsm.readCh1()-307;//to centre the plot around 0. It performs as expected with few errors
+
 				float y = lsm.readCh2();
+
+
 				float coord = x/y;
 
 				if (y > 0){
@@ -89,12 +125,17 @@ int Location::Find_Direction()
 				} else {
 					printf("Direction = error\n");
 				}
-				sum += compass[j];
+			sum += compass[j];
 			}
 		average = sum/10;
+		cout << "average direction = " << average << endl;
+		magneto.open("magneto.txt");
+		magneto << average;
+		magneto.close();
+		}
 
-		return average;
-
+	//}
+*/
 }
 
 //Returns Proximity Data 
@@ -104,7 +145,7 @@ int Location::Find_Proximity()
 	VL53L0X_Error Status = VL53L0X_ERROR_NONE;
 	VL53L0X_Dev_t MyDevice;
 	VL53L0X_Dev_t *pMyDevice = &MyDevice;
-//	printf("VL53L0X API Simple Ranging example FMenzies mod\n\n");
+	printf("VL53L0X API Simple Ranging example FMenzies mod\n\n");
 
 	pMyDevice->I2cDevAddr = 0x29;
 
@@ -186,7 +227,6 @@ int Location::Find_Proximity()
                 break;
             }
         }
-	Final_Proximity = sumProximity/50;
 	return sumProximity/50;
 
         if(Status == VL53L0X_ERROR_NONE)
@@ -203,13 +243,13 @@ int Location::Find_Proximity()
     
     if(Status == VL53L0X_ERROR_NONE)
     {
-//        printf ("Call of VL53L0X_StopMeasurement\n");
+        printf ("Call of VL53L0X_StopMeasurement\n");
         Status = VL53L0X_StopMeasurement(pMyDevice);
     }
 
     if(Status == VL53L0X_ERROR_NONE)
     {
-//        printf ("Wait Stop to be competed\n");
+        printf ("Wait Stop to be competed\n");
         Status = WaitStopCompleted(pMyDevice);
     }
 

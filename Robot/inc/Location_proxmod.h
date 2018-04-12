@@ -1,4 +1,4 @@
-#ifndef Location_H
+y#ifndef Location_H
 #define Location_H
 
 #include <stdlib.h>
@@ -9,7 +9,7 @@
 #include "vl53l0x_platform.h"
 #include "Project_Config.h"
 #include "Move.h"
-#include "LSM303AGR.h"
+
 
 //Location Public Variables
 extern int X_Bearing;
@@ -17,7 +17,6 @@ extern int Y_Bearing;
 extern int X_PathLength;
 extern int Y_PathLength;
 
-extern int Final_Proximity;
 
 class Location
 {

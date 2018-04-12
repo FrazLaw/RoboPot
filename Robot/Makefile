@@ -3,7 +3,8 @@ CC2 = gcc
 
 TARGET = Go_Robopot
 
-INC = -lwiringPi -lpthread -LGUI -LLocation -LMove -LProject_Config
+INC = -lwiringPi -LGUI -LLocation -LMove -LProject_Config -LInterface.h
+
 
 Proj_Dir = /home/teamrobopot/RoboPot/Robot
 
@@ -24,7 +25,9 @@ SRCcpp =\
 	GUI.cpp \
 	Location.cpp \
 	Move.cpp \
+	Interface.cpp\
 	LSM303AGR.cpp \
+
 
 SRCc = \
 	vl53l0x_api_calibration.c \
@@ -55,6 +58,9 @@ LSM303AGR.o: LSM303AGR.cpp
 	$(CC) -c $(INC) $(INCLUDES) $^ -o $@
 	
 Move.o: Move.cpp
+	$(CC) -c $(INC) $(INCLUDES) $^ -o $@
+
+Interface.o: Interface.cpp
 	$(CC) -c $(INC) $(INCLUDES) $^ -o $@
 
 vl53l0x_api_calibration.o: vl53l0x_api_calibration.c

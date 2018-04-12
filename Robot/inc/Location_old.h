@@ -9,7 +9,7 @@
 #include "vl53l0x_platform.h"
 #include "Project_Config.h"
 #include "Move.h"
-#include "LSM303AGR.h"
+
 
 //Location Public Variables
 extern int X_Bearing;
@@ -17,7 +17,6 @@ extern int Y_Bearing;
 extern int X_PathLength;
 extern int Y_PathLength;
 
-extern int Final_Proximity;
 
 class Location
 {
@@ -30,7 +29,7 @@ public:
 	void Find_Path(char Destination, char Pot_Start_Position);
 	int Find_Direction(); //Returns present bearing 0-360degrees
 	int Find_Proximity(); // Returns distance to front wall
-//	void Initialise_Proximity(); //Initialises Sensor
+	void Initialise_Proximity(); //Initialises Sensor
 
 
 private:
