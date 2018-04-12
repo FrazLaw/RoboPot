@@ -24,6 +24,7 @@ SRCcpp =\
 	GUI.cpp \
 	Location.cpp \
 	Move.cpp \
+	LSM303AGR.cpp \
 
 SRCc = \
 	vl53l0x_api_calibration.c \
@@ -49,7 +50,10 @@ GUI.o: GUI.cpp
 
 Location.o: Location.cpp
 	$(CC) -c $(INC) $(INCLUDES) $^ -o $@
-
+	
+LSM303AGR.o: LSM303AGR.cpp
+	$(CC) -c $(INC) $(INCLUDES) $^ -o $@
+	
 Move.o: Move.cpp
 	$(CC) -c $(INC) $(INCLUDES) $^ -o $@
 
