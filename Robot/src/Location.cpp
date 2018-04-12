@@ -1,5 +1,7 @@
 #include "Location.h"
 
+int Final_Proximity;
+
 Location::Location()
 {
 }
