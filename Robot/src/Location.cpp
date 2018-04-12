@@ -16,7 +16,7 @@ int Location::Setup()
 
 char Location::Find_Pot()
 {
-/*	
+	
 	int x,y;
 	int Proximity_North;
 	int Proximity_East;
@@ -52,7 +52,7 @@ char Location::Find_Pot()
 	
 	
 	return Location_ref[x][y];
-*/	
+	
 
 	return 'a';
 }
