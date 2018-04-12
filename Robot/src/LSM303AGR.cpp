@@ -1,10 +1,9 @@
-#include "LSM303AGR.h"
+#include "Location.h"
 
-int LSM303AGR::getFileDescriptor()
+	LSM303AGR::LSM303AGR()
 	{
-		//cout << fd << endl;
-		return fd;
-
+	fd = wiringPiI2CSetup(MAG_ADDR);
+	//return fd;
 	}
 
 	int LSM303AGR::configure(){

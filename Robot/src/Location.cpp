@@ -1,4 +1,4 @@
-
+#include "Location.h"
 
 Location::Location()
 {
@@ -58,6 +58,7 @@ char Location::Find_Pot()
 int Location::Find_Direction()
 {
 	LSM303AGR lsm;
+	//lsm.setup();
 	lsm.configure();
 			int sum = 0;
 			float average = 0;
