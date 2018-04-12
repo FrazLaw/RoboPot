@@ -160,35 +160,196 @@ int Location::Find_Direction()
 	//}
 */
 }
-
+//Returns Proximity Data 
 int Location::Find_Proximity()
 {
+	
+	/*
 	int i;
 	int divisor=5;
 	int proximity_measurements=0;
+	
 	VL53L0X_Error Status = VL53L0X_ERROR_NONE;
 	VL53L0X_Dev_t MyDevice;
 	VL53L0X_Dev_t *pMyDevice = &MyDevice;
 	VL53L0X_RangingMeasurementData_t RangingMeasurementData;
 
-	printf("VL53L0X API Simple Ranging example FMenzies mod\n\n");
+	//printf("VL53L0X API Simple Ranging example FMenzies mod\n\n");
 
 	pMyDevice->I2cDevAddr = 0x29;
 
 	pMyDevice->fd = VL53L0X_i2c_init((char*)"/dev/i2c-1", pMyDevice->I2cDevAddr);//choose between i2c-0 and i2c-1; On the raspberry pi zero, i2c-1 are pins 2 and 3
 
+	if(Status == VL53L0X_ERROR_NONE)
+    {
+        //printf ("Call of VL53L0X_DataInit\n");
+        Status = VL53L0X_DataInit(&MyDevice); // Data initialization
+        //print_pal_error(Status);
+    }
+	
+	if(Status == VL53L0X_ERROR_NONE)
+    {
+        Status = rangingTest(pMyDevice);
+    }*/
+	
+	VL53L0X_RangingMeasurementData_t    RangingMeasurementData;
+    VL53L0X_RangingMeasurementData_t   *pRangingMeasurementData    = &RangingMeasurementData;
+    VL53L0X_Error Status = VL53L0X_ERROR_NONE;
+    uint32_t refSpadCount;
+    uint8_t isApertureSpads;
+    uint8_t VhvSettings;
+    uint8_t PhaseCal;
+	
+	if(Status == VL53L0X_ERROR_NONE)
+    {
+       // printf ("Call of VL53L0X_StaticInit\n");
+        Status = VL53L0X_StaticInit(pMyDevice); // Device Initialization
+        // StaticInit will set interrupt by default
+        //print_pal_error(Status);
+    }
+    if(Status == VL53L0X_ERROR_NONE)
+    {
+        //printf ("Call of VL53L0X_PerformRefCalibration\n");
+        Status = VL53L0X_PerformRefCalibration(pMyDevice,
+        		&VhvSettings, &PhaseCal); // Device Initialization
+        //print_pal_error(Status);
+    }
 
-	if (Status == VL53L0X_ERROR_NONE)
-	{
-		for (i = 0;i<divisor;i++)
-		{
-			printf("Call of VL53L0X_PerformSingleRangingMeasurement\n");
-			Status = VL53L0X_PerformSingleRangingMeasurement(pMyDevice,&RangingMeasurementData);
-			//printf("Measured distance: %i\n\n", RangingMeasurementData.RangeMilliMeter);
-			proximity_measurements += RangingMeasurementData.RangeMilliMeter;
-		}
-		return Round_Proximity((proximity_measurements /divisor), 50);
-	}
+    if(Status == VL53L0X_ERROR_NONE)
+    {
+        //printf ("Call of VL53L0X_PerformRefSpadManagement\n");
+        Status = VL53L0X_PerformRefSpadManagement(pMyDevice,
+        		&refSpadCount, &isApertureSpads); // Device Initialization
+        //print_pal_error(Status);
+    }
+
+    if(Status == VL53L0X_ERROR_NONE)
+    {
+
+        //printf ("Call of VL53L0X_SetDeviceMode\n");
+        Status = VL53L0X_SetDeviceMode(pMyDevice, VL53L0X_DEVICEMODE_CONTINUOUS_RANGING); // Setup in single ranging mode
+        //print_pal_error(Status);
+    }
+    
+    if(Status == VL53L0X_ERROR_NONE)
+    {
+		//printf ("Call of VL53L0X_StartMeasurement\n");
+		Status = VL53L0X_StartMeasurement(pMyDevice);
+		//print_pal_error(Status);
+    }
+
+	if(Status == VL53L0X_ERROR_NONE)
+    {
+        uint32_t measurement;
+        uint32_t no_of_measurements = 5000;
+
+        uint16_t* pResults = (uint16_t*)malloc(sizeof(uint16_t) * no_of_measurements);
+
+        for(measurement=0; measurement<no_of_measurements; measurement++)
+        {
+
+            Status = WaitMeasurementDataReady(pMyDevice);
+
+            if(Status == VL53L0X_ERROR_NONE)
+            {
+                Status = VL53L0X_GetRangingMeasurementData(pMyDevice, pRangingMeasurementData);
+
+                *(pResults + measurement) = pRangingMeasurementData->RangeMilliMeter;
+                //printf("In loop measurement %d: %d\n", measurement, pRangingMeasurementData->RangeMilliMeter);
+
+                // Clear the interrupt
+                VL53L0X_ClearInterruptMask(pMyDevice, VL53L0X_REG_SYSTEM_INTERRUPT_GPIO_NEW_SAMPLE_READY);
+                // VL53L0X_PollingDelay(pMyDevice);
+            } else {
+                break;
+            }
+        }
+
+        if(Status == VL53L0X_ERROR_NONE)
+        {
+            for(measurement=0; measurement<no_of_measurements; measurement++)
+            {
+               // printf("measurement %d: %d\n", measurement, *(pResults + measurement));
+            }
+        }
+
+        free(pResults);
+    }
+
+    
+    if(Status == VL53L0X_ERROR_NONE)
+    {
+        printf ("Call of VL53L0X_StopMeasurement\n");
+        Status = VL53L0X_StopMeasurement(pMyDevice);
+    }
+
+    if(Status == VL53L0X_ERROR_NONE)
+    {
+        printf ("Wait Stop to be competed\n");
+        Status = WaitStopCompleted(pMyDevice);
+    }
+
+    if(Status == VL53L0X_ERROR_NONE)
+	Status = VL53L0X_ClearInterruptMask(pMyDevice,
+		VL53L0X_REG_SYSTEM_INTERRUPT_GPIO_NEW_SAMPLE_READY);
+
+    return Status;
+}
+
+
+// Used for Sensor API
+VL53L0X_Error Location::WaitMeasurementDataReady(VL53L0X_DEV Dev) {
+    VL53L0X_Error Status = VL53L0X_ERROR_NONE;
+    uint8_t NewDatReady=0;
+    uint32_t LoopNb;
+
+    // Wait until it finished
+    // use timeout to avoid deadlock
+    if (Status == VL53L0X_ERROR_NONE) {
+        LoopNb = 0;
+        do {
+            Status = VL53L0X_GetMeasurementDataReady(Dev, &NewDatReady);
+            if ((NewDatReady == 0x01) || Status != VL53L0X_ERROR_NONE) {
+                break;
+            }
+            LoopNb = LoopNb + 1;
+            VL53L0X_PollingDelay(Dev);
+        } while (LoopNb < VL53L0X_DEFAULT_MAX_LOOP);
+
+        if (LoopNb >= VL53L0X_DEFAULT_MAX_LOOP) {
+            Status = VL53L0X_ERROR_TIME_OUT;
+        }
+    }
+
+    return Status;
+}
+
+//Initialises LIDAR SENSOR
+int Location::Initialise_Proximity()
+{
+	VL53L0X_Error Status = VL53L0X_ERROR_NONE;
+	VL53L0X_Dev_t MyDevice;
+	VL53L0X_Dev_t *pMyDevice = &MyDevice;
+	VL53L0X_RangingMeasurementData_t RangingMeasurementData;
+
+	//printf("VL53L0X API Simple Ranging example FMenzies mod\n\n");
+
+	pMyDevice->I2cDevAddr = 0x29;
+
+	pMyDevice->fd = VL53L0X_i2c_init((char*)"/dev/i2c-1", pMyDevice->I2cDevAddr);//choose between i2c-0 and i2c-1; On the raspberry pi zero, i2c-1 are pins 2 and 3
+
+	if(Status == VL53L0X_ERROR_NONE)
+    {
+        //printf ("Call of VL53L0X_DataInit\n");
+        Status = VL53L0X_DataInit(&MyDevice); // Data initialization
+        //print_pal_error(Status);
+    }
+	/*
+	if(Status == VL53L0X_ERROR_NONE)
+    {
+        Status = rangingTest(pMyDevice);
+    }
+*/
 }
 
 void Location::Find_Path(char Destination, char Pot_Start_Position)
