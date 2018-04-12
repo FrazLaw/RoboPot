@@ -38,6 +38,7 @@ private:
 	const char Location_ref[4][4] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L','M', 'N', 'O', 'P' };
 	int Round_Proximity(int Proximity, int Multiple);
 	VL53L0X_Error WaitMeasurementDataReady(VL53L0X_DEV Dev);
+	VL53L0X_Error WaitStopCompleted(VL53L0X_DEV Dev);
 	
 };
 
