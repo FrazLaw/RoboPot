@@ -147,7 +147,7 @@ int Location::Find_Proximity()
 	VL53L0X_Error Status = VL53L0X_ERROR_NONE;
 	VL53L0X_Dev_t MyDevice;
 	VL53L0X_Dev_t *pMyDevice = &MyDevice;
-	printf("VL53L0X API Simple Ranging example FMenzies mod\n\n");
+//	printf("VL53L0X API Simple Ranging example FMenzies mod\n\n");
 
 	pMyDevice->I2cDevAddr = 0x29;
 
@@ -246,13 +246,13 @@ int Location::Find_Proximity()
     
     if(Status == VL53L0X_ERROR_NONE)
     {
-        printf ("Call of VL53L0X_StopMeasurement\n");
+//        printf ("Call of VL53L0X_StopMeasurement\n");
         Status = VL53L0X_StopMeasurement(pMyDevice);
     }
 
     if(Status == VL53L0X_ERROR_NONE)
     {
-        printf ("Wait Stop to be competed\n");
+//        printf ("Wait Stop to be competed\n");
         Status = WaitStopCompleted(pMyDevice);
     }
 

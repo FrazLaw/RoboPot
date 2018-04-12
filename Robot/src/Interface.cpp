@@ -21,6 +21,8 @@ void Interface()
 	
 	while(1)
 	{
+		Location dis;
+
 		input = getch();
 		erase();	//clears screen
 		
@@ -32,7 +34,7 @@ void Interface()
 		//"------------Motor-Display------------\n"
 		//"Motor 1: %i\n"
 		//"Motor 2: %i\n", 
-		      , Final_Proximity
+		      , dis.Find_Proximity()
 		);
 	}
 	
