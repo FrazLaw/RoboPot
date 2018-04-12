@@ -32,7 +32,7 @@ void Interface()
 		//"------------Motor-Display------------\n"
 		//"Motor 1: %i\n"
 		//"Motor 2: %i\n", 
-		      , Proximity
+		      , Final_Proximity
 		);
 	}
 	
