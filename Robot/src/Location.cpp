@@ -227,6 +227,7 @@ int Location::Find_Proximity()
                 break;
             }
         }
+	Final_Proximity = sumProximity/50;
 	return sumProximity/50;
 
         if(Status == VL53L0X_ERROR_NONE)
