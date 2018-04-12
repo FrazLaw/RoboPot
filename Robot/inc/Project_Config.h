@@ -26,8 +26,8 @@ const int West_Bearing = 270;
 
 const std::string SetupMessage = "Robot Initialised";
 const std::string SetupFile = "/var/www/html/Setupfile.txt";
-const std::string cmdfile = "/var/www/html/commandfile.txt";
-const std::string ToGUI = "/var/www/html/GUImessagefile.txt";
+const std::string cmdfile = "/var/www/html/readme.txt";
+const std::string ToGUI = "/var/www/html/position.txt";
 
 
 //-------------------------------------------
@@ -44,10 +44,10 @@ const int PWM_Set_Fast = 1000;
 //-------------------------------------------
 //Define Motor Pins
 
-const int Left_High_Motor = 26;    //p32
-const int Left_Low_Motor = 23;    //p23
-const int Right_High_Motor = 10;    //p24
-const int Right_Low_Motor = 11;    //p26
+const int Left_High_Motor = 0;    //p32
+const int Left_Low_Motor = 1;    //p23
+const int Right_High_Motor = 26;    //p24
+const int Right_Low_Motor = 27;    //p26
 
 //Define Proximity Sensor Pins
 //API Defined

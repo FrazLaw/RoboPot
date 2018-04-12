@@ -17,31 +17,31 @@ void Move::Drive()
 	Location unit;
 	int start_Distance = unit.Find_Proximity();
 	while ((unit.Find_Proximity()-start_Distance )< 50) {
-		pwmWrite(Left_High_Motor, PWM_Set_Slow);
-		pwmWrite(Right_High_Motor, PWM_Set_Slow);
-		digitalWrite(Left_Low_Motor, 0);
-		digitalWrite(Right_Low_Motor, 0);
+		softPwmWrite(Left_High_Motor, PWM_Set_Slow);
+		softPwmWrite(Right_High_Motor, PWM_Set_Slow);
+		softPwmWrite(Left_Low_Motor, 0);
+		softPwmWrite(Right_Low_Motor, 0);
 	}
 
 	while ((unit.Find_Proximity() - start_Distance) < 100) {
-		pwmWrite(Left_High_Motor, PWM_Set_Medium);
-		pwmWrite(Right_High_Motor, PWM_Set_Medium);
-		digitalWrite(Left_Low_Motor, 0);
-		digitalWrite(Right_Low_Motor, 0);
+		softPwmWrite(Left_High_Motor, PWM_Set_Medium);
+		softPwmWrite(Right_High_Motor, PWM_Set_Medium);
+		softPwmWrite(Left_Low_Motor, 0);
+		softPwmWrite(Right_Low_Motor, 0);
 	}
 
 	while ((unit.Find_Proximity() - start_Distance) < 400) {
-		pwmWrite(Left_High_Motor, PWM_Set_Fast);
-		pwmWrite(Right_High_Motor, PWM_Set_Fast);
-		digitalWrite(Left_Low_Motor, 0);
-		digitalWrite(Right_Low_Motor, 0);
+		softPwmWrite(Left_High_Motor, PWM_Set_Fast);
+		softPwmWrite(Right_High_Motor, PWM_Set_Fast);
+		softPwmWrite(Left_Low_Motor, 0);
+		softPwmWrite(Right_Low_Motor, 0);
 	}
 
 	while ((unit.Find_Proximity() - start_Distance) < 450) {
-		pwmWrite(Left_High_Motor, PWM_Set_Medium);
-		pwmWrite(Right_High_Motor, PWM_Set_Medium);
-		digitalWrite(Left_Low_Motor, 0);
-		digitalWrite(Right_Low_Motor, 0);
+		softPwmWrite(Left_High_Motor, PWM_Set_Medium);
+		softPwmWrite(Right_High_Motor, PWM_Set_Medium);
+		softPwmWrite(Left_Low_Motor, 0);
+		softPwmWrite(Right_Low_Motor, 0);
 	}
 
 	while ((unit.Find_Proximity() - start_Distance) < 500) {
@@ -51,10 +51,10 @@ void Move::Drive()
 		digitalWrite(Right_Low_Motor, 0);
 	}
 
-	pwmWrite(Left_High_Motor, PWM_Set_Stop);
-	pwmWrite(Right_High_Motor, PWM_Set_Stop);
-	digitalWrite(Left_Low_Motor, 0);
-	digitalWrite(Right_Low_Motor, 0);
+	softPwmWrite(Left_High_Motor, PWM_Set_Stop);
+	softPwmWrite(Right_High_Motor, PWM_Set_Stop);
+	softPwmWrite(Left_Low_Motor, 0);
+	softPwmWrite(Right_Low_Motor, 0);
 }
 
 void Move::Turn(int Target_Bearing) //Turns the Robot to the Target Bearing
@@ -68,21 +68,21 @@ void Move::Turn(int Target_Bearing) //Turns the Robot to the Target Bearing
 	{
 		while (abs(Facing.Find_Direction()-Target_Bearing)>5)
 		{
-			pwmWrite(Left_High_Motor, PWM_Set_Medium);
-			digitalWrite(Left_Low_Motor, 0);
+			softPwmWrite(Left_High_Motor, PWM_Set_Medium);
+			softPwmWrite(Left_Low_Motor, 0);
 		}
-		pwmWrite(Left_High_Motor, PWM_Set_Stop);
-		digitalWrite(Left_Low_Motor, 0);
+		softPwmWrite(Left_High_Motor, PWM_Set_Stop);
+		softPwmWrite(Left_Low_Motor, 0);
 	}else	
 	if (Turn_Direction == 'L')
 	{
 		while (abs(Facing.Find_Direction()-Target_Bearing)>5)
 		{
-			pwmWrite(Right_High_Motor, PWM_Set_Medium);
-			digitalWrite(Right_Low_Motor, 0);
+			softPwmWrite(Right_High_Motor, PWM_Set_Medium);
+			softPwmWrite(Right_Low_Motor, 0);
 		}
-		pwmWrite(Right_High_Motor, PWM_Set_Stop);
-		digitalWrite(Right_Low_Motor, 0);
+		softPwmWrite(Right_High_Motor, PWM_Set_Stop);
+		softPwmWrite(Right_Low_Motor, 0);
 	}
 	
 }
@@ -96,16 +96,14 @@ int Move::Initialise() 		//Initialises wiringPi
 		return -1;
 	}
 	//Set Motor Pin Configuration
-	pinMode(Left_High_Motor, PWM_OUTPUT);
-	pinMode(Left_Low_Motor, OUTPUT);
-	pinMode(Right_High_Motor, PWM_OUTPUT);
-	pinMode(Right_Low_Motor, OUTPUT);
-	
-	//Motor Initialisation Values
-	pwmWrite(Left_High_Motor, PWM_Set_Stop);
-	pwmWrite(Right_High_Motor, PWM_Set_Stop);
-	digitalWrite(Left_Low_Motor, 0);
-	digitalWrite(Right_Low_Motor, 0);
+	if (
+	softPwmCreate(Left_High_Motor, 0, 1000) != 0 ||
+	softPwmCreate(Left_Low_Motor, 0, 1000) != 0 ||
+	softPwmCreate(Right_High_Motor, 0, 1000) != 0 ||
+	softPwmCreate(Right_Low_Motor, 0, 1000) != 0)
+	{
+		printf("PWM Pin Creation Failed");
+	}
 
 	return 0;
 
@@ -148,5 +146,4 @@ char Move::Turn_LeftorRight(int Target_Bearing, int Current_Bearing)
 			return 'L';//Turn Left
 		}
 	}
-	
 }
