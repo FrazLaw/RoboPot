@@ -51,3 +51,10 @@ PHP, JavaScript, HTML, CSS.
 ### Graphical Demonstration
 
 To view the page without setting up your own html file, just click the link to simulate the graphical output of the web page: https://jsfiddle.net/FrazLaw/uL4w2nnj/1/
+
+### How-to Build the Web Page
+
+To open this web page in your browser you'll need to create a simple text document on your computer. You can also use a text editor such as Notepad++ and choose to save the file with a html extension. This will store the program in a file under your default web application such as google chrome and enable you to easily open it as you would any normal internet browser.
+
+Resources for initial developemnt or changes:
+https://www.w3schools.com/html/default.asp
