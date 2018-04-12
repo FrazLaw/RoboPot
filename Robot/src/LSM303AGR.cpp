@@ -1,3 +1,5 @@
+#include "LSM303AGR.h"
+
 int LSM303AGR::getFileDescriptor()
 	{
 		//cout << fd << endl;
