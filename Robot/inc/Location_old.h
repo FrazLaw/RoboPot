@@ -1,4 +1,4 @@
-y#ifndef Location_H
+#ifndef Location_H
 #define Location_H
 
 #include <stdlib.h>
@@ -29,7 +29,7 @@ public:
 	void Find_Path(char Destination, char Pot_Start_Position);
 	int Find_Direction(); //Returns present bearing 0-360degrees
 	int Find_Proximity(); // Returns distance to front wall
-//	void Initialise_Proximity(); //Initialises Sensor
+	void Initialise_Proximity(); //Initialises Sensor
 
 
 private:
