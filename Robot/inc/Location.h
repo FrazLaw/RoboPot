@@ -29,7 +29,7 @@ public:
 	void Find_Path(char Destination, char Pot_Start_Position);
 	int Find_Direction(); //Returns present bearing 0-360degrees
 	int Find_Proximity(); // Returns distance to front wall
-
+	void Initialise_Proximity(); //Initialises Sensor
 
 
 private:
@@ -37,6 +37,8 @@ private:
 	
 	const char Location_ref[4][4] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L','M', 'N', 'O', 'P' };
 	int Round_Proximity(int Proximity, int Multiple);
+	VL53L0X_Error WaitMeasurementDataReady(VL53L0X_DEV Dev);
+	
 };
 
 #endif

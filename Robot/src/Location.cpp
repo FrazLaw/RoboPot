@@ -168,12 +168,12 @@ int Location::Find_Proximity()
 	int i;
 	int divisor=5;
 	int proximity_measurements=0;
-	
-	VL53L0X_Error Status = VL53L0X_ERROR_NONE;
+	*/
+//	VL53L0X_Error Status = VL53L0X_ERROR_NONE;
 	VL53L0X_Dev_t MyDevice;
 	VL53L0X_Dev_t *pMyDevice = &MyDevice;
-	VL53L0X_RangingMeasurementData_t RangingMeasurementData;
-
+//	VL53L0X_RangingMeasurementData_t RangingMeasurementData;
+	/*
 	//printf("VL53L0X API Simple Ranging example FMenzies mod\n\n");
 
 	pMyDevice->I2cDevAddr = 0x29;
@@ -192,7 +192,7 @@ int Location::Find_Proximity()
         Status = rangingTest(pMyDevice);
     }*/
 	
-	VL53L0X_RangingMeasurementData_t    RangingMeasurementData;
+    VL53L0X_RangingMeasurementData_t    RangingMeasurementData;
     VL53L0X_RangingMeasurementData_t   *pRangingMeasurementData    = &RangingMeasurementData;
     VL53L0X_Error Status = VL53L0X_ERROR_NONE;
     uint32_t refSpadCount;
@@ -244,7 +244,7 @@ int Location::Find_Proximity()
         uint32_t no_of_measurements = 5000;
 
         uint16_t* pResults = (uint16_t*)malloc(sizeof(uint16_t) * no_of_measurements);
-
+//	Locatio
         for(measurement=0; measurement<no_of_measurements; measurement++)
         {
 
@@ -325,7 +325,7 @@ VL53L0X_Error Location::WaitMeasurementDataReady(VL53L0X_DEV Dev) {
 }
 
 //Initialises LIDAR SENSOR
-int Location::Initialise_Proximity()
+void Location::Initialise_Proximity()
 {
 	VL53L0X_Error Status = VL53L0X_ERROR_NONE;
 	VL53L0X_Dev_t MyDevice;
