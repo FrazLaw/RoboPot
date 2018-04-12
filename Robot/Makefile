@@ -3,7 +3,7 @@ CC2 = gcc
 
 TARGET = Go_Robopot
 
-INC = -lwiringPi -LGUI -LLocation -LMove -LProject_Config -LInterface.h
+INC = -lncurses -lwiringPi -LGUI -LLocation -LMove -LProject_Config -LInterface.h
 
 
 Proj_Dir = /home/teamrobopot/RoboPot/Robot

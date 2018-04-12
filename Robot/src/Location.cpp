@@ -100,7 +100,7 @@ int Location::Find_Direction()
 //Returns Proximity Data 
 int Location::Find_Proximity()
 {
-	
+	int Final_Proximity;
 	VL53L0X_Error Status = VL53L0X_ERROR_NONE;
 	VL53L0X_Dev_t MyDevice;
 	VL53L0X_Dev_t *pMyDevice = &MyDevice;
