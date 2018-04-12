@@ -1,28 +1,3 @@
-#include "Location.h"
-#include <iostream>
-#include <errno.h>
-#include <wiringPiI2C.h>
-#include <linux/i2c.h>
-#include "LSM303AGR.h"
-#include <unistd.h>
-#include <stdio.h>
-#include <math.h>
-#include <fstream>
-
-#define PI 3.14159265 //used for calculations
-#define ACC_ADDR 0x19 //not used
-#define MAG_ADDR 0x1E
-//default addresses
-#define STATUS_REG_M 0x67
-#define OUTX_L_REG_M 0x68 //lsb
-#define OUTX_H_REG_M 0x69 //msb to shift << 8
-#define OUTY_L_REG_M 0x6A //lsb
-#define OUTY_H_REG_M 0x6B //msb to shift
-#define OUTZ_L_REG_M 0x6C //lsb
-#define OUTZ_H_REG_M 0x6D //msb to shift
-#define WHO_AM_I_M  0x4F // device ID
-#define CFG_REG_A_M 0x60 //configure address
-
 
 
 Location::Location()
@@ -82,43 +57,8 @@ char Location::Find_Pot()
 
 int Location::Find_Direction()
 {
-
-	//using namespace std;
-
-	int LSM303AGR::getFileDescriptor()
-	{
-		//cout << fd << endl;
-		return fd;
-
-	}
-
-	int LSM303AGR::configure(){
-		alastair = wiringPiI2CWriteReg8(fd, CFG_REG_A_M, 0x00);//configure with default settings
-	}
-
-	int LSM303AGR::readCh1(){
-		msbX = wiringPiI2CReadReg8(fd, OUTX_H_REG_M);//68h and 69h for X output registers, 69 is MSB(?)
-		lsbX = wiringPiI2CReadReg8(fd, OUTX_L_REG_M);
-		xresult = (msbX<<8 | lsbX);//the value is a 16-bit signed integer. Therefore, shift the 8 bits read before (msbX) and input the latter 8 bits on the end.
-		return xresult;
-	}
-
-	int LSM303AGR::readCh2(){
-		msbY = wiringPiI2CReadReg8(fd, OUTY_H_REG_M);//6Ah and 6Bh for y output registers,
-		lsbY = wiringPiI2CReadReg8(fd, OUTY_L_REG_M);
-		yresult = (msbY << 8) | (lsbY);
-		return yresult;
-	}
-
-	//int main(){
-
 	LSM303AGR lsm;
-	ofstream magneto;
-
 	lsm.configure();
-
-		for (int i = 0; i<100000; i++){//number of output checks
-
 			int sum = 0;
 			float average = 0;
 			float compass[10];
@@ -127,10 +67,7 @@ int Location::Find_Direction()
 			for (int j = 0; j < 10; j++){//number of averages, 10 seems to be max
 
 				float x = lsm.readCh1()-307;//to centre the plot around 0. It performs as expected with few errors
-
 				float y = lsm.readCh2();
-
-
 				float coord = x/y;
 
 				if (y > 0){
@@ -148,17 +85,10 @@ int Location::Find_Direction()
 				} else {
 					printf("Direction = error\n");
 				}
-			sum += compass[j];
+				sum += compass[j];
 			}
 		average = sum/10;
-		cout << "average direction = " << average << endl;
-		magneto.open("magneto.txt");
-		magneto << average;
-		magneto.close();
-		}
-
-	//}
-
+		return average;
 }
 
 int Location::Find_Proximity()
