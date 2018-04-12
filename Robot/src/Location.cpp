@@ -1,5 +1,5 @@
 #include "Location.h"
-#include <iostream>
+/*#include <iostream>
 #include <errno.h>
 #include <wiringPiI2C.h>
 #include <linux/i2c.h>
@@ -22,7 +22,7 @@
 #define OUTZ_H_REG_M 0x6D //msb to shift
 #define WHO_AM_I_M  0x4F // device ID
 #define CFG_REG_A_M 0x60 //configure address
-
+*/
 
 
 Location::Location()
@@ -82,7 +82,7 @@ char Location::Find_Pot()
 
 int Location::Find_Direction()
 {
-
+/*
 	//using namespace std;
 
 	int LSM303AGR::getFileDescriptor()
@@ -158,7 +158,7 @@ int Location::Find_Direction()
 		}
 
 	//}
-
+*/
 }
 
 int Location::Find_Proximity()
