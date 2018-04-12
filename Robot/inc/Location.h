@@ -17,6 +17,7 @@ extern int Y_Bearing;
 extern int X_PathLength;
 extern int Y_PathLength;
 
+extern int Final_Proximity;
 
 class Location
 {
