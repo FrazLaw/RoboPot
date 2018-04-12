@@ -1,7 +1,7 @@
 #ifndef LSM303AGR_H
 #define LSM303AGR_H
 
-#include "Location.h"
+//#include "Location.h"
 //#include <iostream>
 #include <errno.h>
 #include <wiringPiI2C.h>
@@ -41,6 +41,7 @@ class LSM303AGR
 	int16_t zresult;
 public:
 	LSM303AGR();
+	int setup();
 	int configure();
 	int getFileDescriptor();
 	int dataAvailable();

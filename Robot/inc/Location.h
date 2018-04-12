@@ -9,7 +9,7 @@
 #include "vl53l0x_platform.h"
 #include "Project_Config.h"
 #include "Move.h"
-
+#include "LSM303AGR.h"
 
 //Location Public Variables
 extern int X_Bearing;
