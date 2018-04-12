@@ -10,12 +10,15 @@ location class
 #include <stdio.h>
 #include <string>
 #include <wiringPi.h>	//RPI headers and functions commented out in laptop version
+#include <thread>
 
 //include Classes
 #include "GUI.h"
 #include "Location.h"
 #include "Move.h"
 #include "Project_Config.h"
+#include "Interface.h"
+
 
 int main()
 {
@@ -33,6 +36,8 @@ int main()
 	int Y_PathLength;  // Declare path length in y direction for location class
 
 	motors.Initialise(); //Initialise Motors
+	
+	std::thread ID_Interface(Interface); //Initialise Interface thread
 
 	while (1)
 	{
@@ -65,6 +70,6 @@ int main()
 				}
 			}
 		}
-`	}//Close while loop
+	}//Close while loop
 
 } // End main
