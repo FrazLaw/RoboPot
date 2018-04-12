@@ -6,7 +6,7 @@
 #include <errno.h>
 #include <wiringPiI2C.h>
 #include <linux/i2c.h>
-#include "LSM303AGR.h"
+//#include "LSM303AGR.h"
 #include <unistd.h>
 #include <stdio.h>
 #include <math.h>
