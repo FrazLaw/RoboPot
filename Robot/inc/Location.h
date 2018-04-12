@@ -35,7 +35,7 @@ public:
 private:
 	void Find_coordinates(char ref, int *x, int *y); //converts abcd etc into x and y coordinates
 	
-	const char Location_ref[4][4] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l','m', 'n', 'o', 'p' };
+	const char Location_ref[4][4] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L','M', 'N', 'O', 'P' };
 	int Round_Proximity(int Proximity, int Multiple);
 };
 

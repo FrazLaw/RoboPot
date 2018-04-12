@@ -1,3 +1,3 @@
 all:
-	g++ -o i2ctest i2c_test.cpp -l wiringPi
+	g++ -o magnetoi2c magnetoi2c.cpp -l wiringPi
 

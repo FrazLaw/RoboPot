@@ -124,7 +124,11 @@ This is our solution to moveable plant pots remotely controlled via a web interf
 	</tr>
 	<tr>
 		<td>Top Right</td>
-		<td>"Value?"</td>
+		<td><?php $myfile = fopen("position.txt","r") or die ("unable");
+			$value = fread($myfile, filesize("position.txt"));
+			echo $value;
+			fclose($myfile);
+		?></td>
 	</tr>
 	<tr>
 		<td>Bottom left</td>
@@ -173,14 +177,14 @@ function lightsensing(){
 	setInterval(function(){ //wait function 
 		var request = new XMLHttpRequest(); //XMLHttpRequest is in-built function
 		request.onreadystatechange = function(){
-			if (request.readyState == 4 && request.status == 200){ //server status and checks 
+		if (request.readyState == 4 && request.status == 200){ //server status and checks 
 				console.log(request.responseText); //request.responseText is the actual value that is being sent, .log isn't actually displaying the data
 				document.getElementById("demo").innerHTML =  request.responseText; //document is assigning the value from above into the table 
 			}
-		}		
+		}
 		request.open('POST', 'lightsensorvalue1.php', true); //actually opening and sending the files 
 		request.send();
-	},1000);	
+	},1000);
 }	//wait
 </script>
 
@@ -207,12 +211,36 @@ function position(){
 		request.onreadystatechange = function(){
 			if (request.readyState == 4 && request.status == 200){ //server status and checks 
 				console.log(request.responseText);
-		
-		if (request.responseText == 'A'){
+			}
+			var response = request.responseText;
+				switch(response){
+					case 'A':
+						document.getElementById("A").style.background = "#ff6600";
+						//console.log(response)
+						break;
+					case 'B':
+						document.getElementById("B").style.background = "#ff6600";
+						break;
+					case '"C\\n"':
+						document.getElementById("C").style.background = "#ff6600";
+						break;
+					//default:
+					//	document.getElementById("A").style.background = "#ff6600";
+					//	document.getElementById("A").innerHTML = response;
+//						<?php
+//						$myfile = fopen("position.txt", "r") or die ("unable to open file");
+//						$value = fread($myfile, filesize("position.txt"));
+//						echo $value;//json_encode($value);
+//						fclose($myfile);
+//						?>;
+//						console.log(response);
+//						break;
+				}
+/*		if (response  == 'A'){
 					document.getElementById("A").style.background ="#ff6600";
-		} else if (request.responseText == 'B'){
+		} else if (response == 'B'){
 					document.getElementById("B").style.background ="#ff6600";
-		} else if (request.responseText == 'C'){
+		} else if (response == 'c'){
 					document.getElementById("C").style.background ="#ff6600";
 		} else if (request.responseText == 'D'){
 					document.getElementById("D").style.background ="#ff6600";
@@ -242,12 +270,11 @@ function position(){
 					document.getElementById("P").style.background ="#ff6600";
 		} else { 
 					document.getElementById("A").style.background ="#ff6600";
-		}
+					document.getElementById("A").innerHTML = response;
+		}*/
 			}
-		}
-		request.open('POST', 'positionupdate.php', true); //actually opening and sending the files 
+		request.open('GET', 'positionupdate.php', true); //actually opening and sending the files 
 		request.send();	
-		
 	},3000);		//wait
 }
 </script>
