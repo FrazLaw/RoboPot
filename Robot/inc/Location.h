@@ -1,4 +1,4 @@
-y#ifndef Location_H
+#ifndef Location_H
 #define Location_H
 
 #include <stdlib.h>
