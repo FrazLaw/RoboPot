@@ -78,7 +78,7 @@ body {
 p.intro {
 	color: white;
 	text-shadow: 1px 1px 5px black, 0 0 25px green, 0 0 5px lawngreen;
-	front-size: 2.5em;
+	font-size: 1.2em;
 	text-align: center;
 }
 
@@ -124,7 +124,11 @@ This is our solution to moveable plant pots remotely controlled via a web interf
 	</tr>
 	<tr>
 		<td>Top Right</td>
-		<td>"Value?"</td>
+		<td><?php $myfile = fopen("position.txt","r") or die ("unable");
+			$value = fread($myfile, filesize("position.txt"));
+			echo $value;
+			fclose($myfile);
+		?></td>
 	</tr>
 	<tr>
 		<td>Bottom left</td>
@@ -173,14 +177,14 @@ function lightsensing(){
 	setInterval(function(){ //wait function 
 		var request = new XMLHttpRequest(); //XMLHttpRequest is in-built function
 		request.onreadystatechange = function(){
-			if (request.readyState == 4 && request.status == 200){ //server status and checks 
+		if (request.readyState == 4 && request.status == 200){ //server status and checks 
 				console.log(request.responseText); //request.responseText is the actual value that is being sent, .log isn't actually displaying the data
 				document.getElementById("demo").innerHTML =  request.responseText; //document is assigning the value from above into the table 
 			}
-		}		
+		}
 		request.open('POST', 'lightsensorvalue1.php', true); //actually opening and sending the files 
 		request.send();
-	},1000);	
+	},1000);
 }	//wait
 </script>
 
@@ -207,47 +211,62 @@ function position(){
 		request.onreadystatechange = function(){
 			if (request.readyState == 4 && request.status == 200){ //server status and checks 
 				console.log(request.responseText);
-		
-		if (request.responseText == 'A'){
-					document.getElementById("A").style.background ="#ff6600";
-		} else if (request.responseText == 'B'){
-					document.getElementById("B").style.background ="#ff6600";
-		} else if (request.responseText == 'C'){
-					document.getElementById("C").style.background ="#ff6600";
-		} else if (request.responseText == 'D'){
-					document.getElementById("D").style.background ="#ff6600";
-		} else if (request.responseText == 'E'){
-					document.getElementById("E").style.background ="#ff6600";
-		} else if (request.responseText == 'F'){
-					document.getElementById("F").style.background ="#ff6600";
-		} else if (request.responseText == 'G'){
-					document.getElementById("G").style.background ="#ff6600";
-		} else if (request.responseText == 'H'){
-					document.getElementById("H").style.background ="#ff6600";
-		} else if (request.responseText == 'I'){
-					document.getElementById("I").style.background ="#ff6600";
-		} else if (request.responseText == 'J'){
-					document.getElementById("J").style.background ="#ff6600";
-		} else if (request.responseText == 'K'){
-					document.getElementById("K").style.background ="#ff6600";
-		} else if (request.responseText == 'L'){
-					document.getElementById("L").style.background ="#ff6600";
-		} else if (request.responseText == 'M'){
-					document.getElementById("M").style.background ="#ff6600";
-		} else if (request.responseText == 'N'){
-					document.getElementById("N").style.background ="#ff6600";
-		} else if (request.responseText == 'O'){
-					document.getElementById("O").style.background ="#ff6600";
-		} else if (request.responseText == 'P'){
-					document.getElementById("P").style.background ="#ff6600";
-		} else { 
-					document.getElementById("A").style.background ="#ff6600";
-		}
 			}
-		}
-		request.open('POST', 'positionupdate.php', true); //actually opening and sending the files 
+			var response = request.responseText;
+				switch(response){
+					case '"A\\n"':
+						document.getElementById("A").style.background = "#ff6600";
+						break;
+					case '"B\\n"':
+						document.getElementById("B").style.background = "#ff6600";
+						break;
+					case '"C\\n"':
+						document.getElementById("C").style.background = "#ff6600";
+						break;
+					case '"D\\n"':
+						document.getElementById("D").style.background = "#ff6600";
+						break;
+					case '"E\\n"':
+						document.getElementById("E").style.background = "#ff6600";
+						break;
+					case '"F\\n"':
+						document.getElementById("F").style.background = "#ff6600";
+						break;
+					case '"G\\n"':
+						document.getElementById("G").style.background = "#ff6600";
+						break;
+					case '"H\\n"':
+						document.getElementById("H").style.background = "#ff6600";
+						break;
+					case '"I\\n"':
+						document.getElementById("I").style.background = "#ff6600";
+						break;
+					case '"J\\n"':
+						document.getElementById("J").style.background = "#ff6600";
+						break;
+					case '"K\\n"':
+						document.getElementById("K").style.background = "#ff6600";
+						break;
+					case '"L\\n"':
+						document.getElementById("L").style.background = "#ff6600";
+						break;
+					case '"M\\n"':
+						document.getElementById("M").style.background = "#ff6600";
+						break;
+					case '"N\\n"':
+						document.getElementById("N").style.background = "#ff6600";
+						break;
+					case '"O\\n"':
+						document.getElementById("O").style.background = "#ff6600";
+						break;
+					case '"P\\n"':
+						document.getElementById("P").style.background = "#ff6600";
+						break;
+				}
+
+			}
+		request.open('GET', 'positionupdate.php', true); //actually opening and sending the files 
 		request.send();	
-		
 	},3000);		//wait
 }
 </script>
