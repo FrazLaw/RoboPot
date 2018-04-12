@@ -2,6 +2,8 @@
 #include <string>
 #include <unistd.h>
 
+#include <Location.h>
+
 //Reads Robot Sensor Data and Displays
 //Reads Motor Status and Displays
 
@@ -25,14 +27,12 @@ void Interface()
 		printw("------------Robopot-Display------------\n"
 		"------------Sensor-Display------------\n"
 		"Proximity Sensor Data: %i\n"
-		"Magnemometer Sensor Data: %i\n"
-		"GUI Input: %c\n",
+		//"Magnemometer Sensor Data: %i\n"
+		//"GUI Input: %c\n",
 		//"------------Motor-Display------------\n"
 		//"Motor 1: %i\n"
 		//"Motor 2: %i\n", 
-		       Proximity,
-		       Direction,
-		       cmd
+		      , Proximity
 		);
 	}
 	
