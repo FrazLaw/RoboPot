@@ -58,11 +58,7 @@ char Location::Find_Pot()
 int Location::Find_Direction()
 {
 	LSM303AGR lsm;
-//	ofstream magneto;
 	lsm.configure();
-
-//		for (int i = 0; i<1000000; i++){//number of output checks
-
 			int sum = 0;
 			float average = 0;
 			float compass[10];
@@ -71,9 +67,7 @@ int Location::Find_Direction()
 			for (int j = 0; j < 10; j++){//number of averages, 10 seems to be max
 
 				float x = lsm.readCh1()-307;//to centre the plot around 0. It performs as expected with few errors
-
 				float y = lsm.readCh2();
-
 				float coord = x/y;
 
 				if (y > 0){
@@ -91,14 +85,10 @@ int Location::Find_Direction()
 				} else {
 					printf("Direction = error\n");
 				}
-			sum += compass[j];
+				sum += compass[j];
 			}
 		average = sum/10;
 		return average;
-		//}
-
-	//}
-
 }
 
 int Location::Find_Proximity()
