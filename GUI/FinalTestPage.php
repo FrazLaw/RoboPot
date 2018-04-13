@@ -78,7 +78,7 @@ body {
 p.intro {
 	color: white;
 	text-shadow: 1px 1px 5px black, 0 0 25px green, 0 0 5px lawngreen;
-	font-size: 1.25em;
+	font-size: 1.15em;
 	text-align: center;
 }
 
@@ -157,7 +157,10 @@ This is our solution to moveable plant pots remotely controlled via a web interf
 <button class="button" id="O" onclick="myFunction(this)"></button>
 <button class="button" id="P" onclick="myFunction(this)"></button>
 
-<script src="lightsensing.js"></script>
+<script src="lightsensing1.js"></script>
+<script src="lightsensing2.js"></script>
+<script src="lightsensing3.js"></script>
+<script src="lightsensing4.js"></script>
 <script src="position.js"></script>
 <script src="buttonpress.js"></script>
 
