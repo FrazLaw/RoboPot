@@ -118,5 +118,12 @@ The proximity sensor PCB gives the robot the ability to recognise the distance b
 An essential part of the system was to move the plant pot itself. To do this we will demonstrate using a small motor car which will be controlled via this motor driver circuit:
 ![alt text](https://github.com/FrazLaw/RoboPot/blob/master/Hardware/SchematicMotor.PNG)
 
+### Power Supply Design
+Motor power supplies can be very noisy due to inductance in the motors causing voltage spikes. Additionally, sensitive digital circuitry such as the robot sensor PCBs and Raspberry Pi as well as the I2C communication buses should be isolated from noisy supply lines to prevent damage and ensure reliability. A simple solution to this problem is to design seperate power supplies on the robot for the Motors and the rest of the circuitry.
 
+This was implemented through use of the L298 motor driver chip which uses seperate power supplies for the motors and input logic supply. Thus two isolated power supplies were used. 
+
+The first was supplied from four AA Duracell Batteries connected in series to the L298 motor powersupply pins. The second was supplied from six AA batteries connected in series to the power supply PCB illustrated below. The PCB was designed to supply 5V to the Raspberry Pi 5V pin which in turn powered the sensors and motor logic supply from its 5V and 3.3V power supply pins:
+
+![alt text](https://github.com/FrazLaw/RoboPot/blob/master/Hardware/Power_Supply_Schematic.PNG)
 
