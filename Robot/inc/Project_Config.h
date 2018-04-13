@@ -46,8 +46,8 @@ const int PWM_Set_Fast = 1000;
 
 const int Left_High_Motor = 0;    //p32
 const int Left_Low_Motor = 1;    //p23
-const int Right_High_Motor = 26;    //p24
-const int Right_Low_Motor = 27;    //p26
+const int Right_High_Motor = 4;    //p24
+const int Right_Low_Motor = 5;    //p26
 
 //Define Proximity Sensor Pins
 //API Defined
