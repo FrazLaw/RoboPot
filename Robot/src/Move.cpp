@@ -10,12 +10,12 @@ Move::Move()
 Move::~Move()
 {
 }
-
+//Dependencies Proximity Sensor
 void Move::Drive()
 {
 	//Move one unit space 2m/4units= 0.5m=500mm
-	Location unit;
-	int start_Distance = unit.Find_Proximity();
+	Location unit;	
+	int start_Distance = unit.Find_Proximity();		//Using LIDAR to determine forward drive distance
 	while ((unit.Find_Proximity()-start_Distance )< 50) {
 		softPwmWrite(Left_High_Motor, PWM_Set_Slow);
 		softPwmWrite(Right_High_Motor, PWM_Set_Slow);
@@ -57,16 +57,21 @@ void Move::Drive()
 	softPwmWrite(Right_Low_Motor, 0);
 }
 
+//Dependencies Magnemometer
 void Move::Turn(int Target_Bearing) //Turns the Robot to the Target Bearing
 {
 	Location Facing;
-	int Current_Bearing = Facing.Find_Direction();
+	LSM303AGR lsm;
+	int fd = lsm.setup();
+	int x = lsm.configure();
+	
+	int Current_Bearing = Facing.Find_Direction(fd);	//Using Magnemometer to determine turning angle
 	
 	char Turn_Direction = Turn_LeftorRight(Target_Bearing, Current_Bearing);
 	
 	if (Turn_Direction == 'R')
 	{
-		while (abs(Facing.Find_Direction()-Target_Bearing)>5)
+		while (abs(Facing.Find_Direction(fd)-Target_Bearing)>5)
 		{
 			softPwmWrite(Left_High_Motor, PWM_Set_Medium);
 			softPwmWrite(Left_Low_Motor, 0);
@@ -76,7 +81,7 @@ void Move::Turn(int Target_Bearing) //Turns the Robot to the Target Bearing
 	}else	
 	if (Turn_Direction == 'L')
 	{
-		while (abs(Facing.Find_Direction()-Target_Bearing)>5)
+		while (abs(Facing.Find_Direction(fd)-Target_Bearing)>5)
 		{
 			softPwmWrite(Right_High_Motor, PWM_Set_Medium);
 			softPwmWrite(Right_Low_Motor, 0);
@@ -84,7 +89,7 @@ void Move::Turn(int Target_Bearing) //Turns the Robot to the Target Bearing
 		softPwmWrite(Right_High_Motor, PWM_Set_Stop);
 		softPwmWrite(Right_Low_Motor, 0);
 	}
-	
+
 }
 
 int Move::Initialise() 		//Initialises wiringPi

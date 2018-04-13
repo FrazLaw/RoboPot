@@ -45,8 +45,8 @@ public:
 	int configure();
 	int getFileDescriptor();
 	int dataAvailable();
-	int readCh1();
-	int readCh2();
+	int readCh1(int fd);
+	int readCh2(int fd);
 	int readCh3();
 	int startSeq();
 	int sadW();

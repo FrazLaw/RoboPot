@@ -19,6 +19,8 @@ extern int Y_PathLength;
 
 extern int Final_Proximity;
 
+//int init = wiringPiI2CSetup(MAG_ADDR);
+
 class Location
 {
 public:
@@ -28,10 +30,8 @@ public:
 	int Setup(); //Sets bearings and initial location of pot
 	char Find_Pot();	//returns character representing location of Pot
 	void Find_Path(char Destination, char Pot_Start_Position);
-	int Find_Direction(); //Returns present bearing 0-360degrees
+	int Find_Direction(int fd); //Returns present bearing 0-360degrees
 	int Find_Proximity(); // Returns distance to front wall
-//	void Initialise_Proximity(); //Initialises Sensor
-
 
 private:
 	void Find_coordinates(char ref, int *x, int *y); //converts abcd etc into x and y coordinates

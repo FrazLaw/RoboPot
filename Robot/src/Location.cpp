@@ -57,12 +57,12 @@ char Location::Find_Pot()
 	return 'a';
 }
 
-int Location::Find_Direction()
+int Location::Find_Direction(int fd)
 {
 
 	LSM303AGR lsm;
-	//lsm.setup();
-	lsm.configure();
+//	lsm.configure();
+//	lsm.setup();
 			int sum = 0;
 			float average = 0;
 			float compass[10];
@@ -70,8 +70,8 @@ int Location::Find_Direction()
 
 			for (int j = 0; j < 10; j++){//number of averages, 10 seems to be max
 
-				float x = lsm.readCh1()-307;//to centre the plot around 0. It performs as expected with few errors
-				float y = lsm.readCh2();
+				float x = lsm.readCh1(fd)-307;//to centre the plot around 0. It performs as expected with few errors
+				float y = lsm.readCh2(fd);
 				float coord = x/y;
 
 				if (y > 0){
@@ -87,7 +87,7 @@ int Location::Find_Direction()
 					direction = 0;
 					compass[j] = direction;
 				} else {
-					printf("Direction = error\n");
+//					printf("Direction = error\n");
 				}
 				sum += compass[j];
 			}
@@ -101,7 +101,7 @@ int Location::Find_Direction()
 int Location::Find_Proximity()
 {
 	int Final_Proximity;
-	VL53L0X_Error Status = VL53L0X_ERROR_NONE;
+/*	VL53L0X_Error Status = VL53L0X_ERROR_NONE;
 	VL53L0X_Dev_t MyDevice;
 	VL53L0X_Dev_t *pMyDevice = &MyDevice;
 //	printf("VL53L0X API Simple Ranging example FMenzies mod\n\n");
@@ -216,8 +216,10 @@ int Location::Find_Proximity()
     if(Status == VL53L0X_ERROR_NONE)
 	Status = VL53L0X_ClearInterruptMask(pMyDevice,
 		VL53L0X_REG_SYSTEM_INTERRUPT_GPIO_NEW_SAMPLE_READY);
+*/
+//    return Status;
 
-    return Status;
+	return 5;
 }
 
 //  Used for Sensor API
