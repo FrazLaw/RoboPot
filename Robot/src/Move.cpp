@@ -71,7 +71,7 @@ void Move::Turn(int Target_Bearing) //Turns the Robot to the Target Bearing
 	
 	if (Turn_Direction == 'R')
 	{
-		while (abs(Facing.Find_Direction()-Target_Bearing)>5)
+		while (abs(Facing.Find_Direction(fd)-Target_Bearing)>5)
 		{
 			softPwmWrite(Left_High_Motor, PWM_Set_Medium);
 			softPwmWrite(Left_Low_Motor, 0);
@@ -81,7 +81,7 @@ void Move::Turn(int Target_Bearing) //Turns the Robot to the Target Bearing
 	}else	
 	if (Turn_Direction == 'L')
 	{
-		while (abs(Facing.Find_Direction()-Target_Bearing)>5)
+		while (abs(Facing.Find_Direction(fd)-Target_Bearing)>5)
 		{
 			softPwmWrite(Right_High_Motor, PWM_Set_Medium);
 			softPwmWrite(Right_Low_Motor, 0);
