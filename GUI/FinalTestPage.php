@@ -119,24 +119,20 @@ This is our solution to moveable plant pots remotely controlled via a web interf
 	</tr>
 	<tr>
 		<td>Top left</td>
-		<td id="demo"></td>
+		<td id="light1"></td>
 		
 	</tr>
 	<tr>
 		<td>Top Right</td>
-		<td><?php $myfile = fopen("position.txt","r") or die ("unable");
-			$value = fread($myfile, filesize("position.txt"));
-			echo $value;
-			fclose($myfile);
-		?></td>
+		<td id="light2"></td>
 	</tr>
 	<tr>
 		<td>Bottom left</td>
-		<td>"Value?"</td>
+		<td id="light3"></td>
 	</tr>
 	<tr>
 		<td>Bottom Right</td>
-		<td>"Value?"</td>
+		<td id="light4"></td>
 	</tr>
 </table>
 
