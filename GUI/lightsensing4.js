@@ -1,6 +1,6 @@
 window.onload = lightsensing4();
 
-function lightsensing(){
+function lightsensing4(){
 	setInterval(function(){ //wait function 
 		var request = new XMLHttpRequest(); //XMLHttpRequest is in-built function
 		request.onreadystatechange = function(){
