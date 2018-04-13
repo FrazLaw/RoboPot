@@ -6,7 +6,7 @@ TARGET = Go_Robopot
 INC = -lncurses -lwiringPi -LGUI -LLocation -LMove -LProject_Config -LInterface.h
 
 
-Proj_Dir = /home/teamrobopot/RoboPot/Robot
+Proj_Dir = /home/pi/Robopot/Robot
 
 INCLUDES = \
 	-I$(Proj_Dir) \

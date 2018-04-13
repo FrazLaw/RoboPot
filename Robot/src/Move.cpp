@@ -58,7 +58,7 @@ void Move::Drive()
 }
 
 void Move::Turn(int Target_Bearing) //Turns the Robot to the Target Bearing
-{
+{/*
 	Location Facing;
 	int Current_Bearing = Facing.Find_Direction();
 	
@@ -84,12 +84,12 @@ void Move::Turn(int Target_Bearing) //Turns the Robot to the Target Bearing
 		softPwmWrite(Right_High_Motor, PWM_Set_Stop);
 		softPwmWrite(Right_Low_Motor, 0);
 	}
-	
+*/	
 }
 
 int Move::Initialise() 		//Initialises wiringPi
 {
-	//Initialise Wiring Pi
+/*	//Initialise Wiring Pi
 	if (wiringPiSetup() == -1)
 	{
 		printf("Wiring Pi Setup Failed \n");
@@ -106,7 +106,7 @@ int Move::Initialise() 		//Initialises wiringPi
 	}
 
 	return 0;
-
+*/
 }
 
 char Move::Turn_LeftorRight(int Target_Bearing, int Current_Bearing)

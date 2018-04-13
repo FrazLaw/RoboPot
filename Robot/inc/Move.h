@@ -6,6 +6,7 @@
 #include <pthread.h>
 #include "Project_Config.h"
 #include "Location.h"
+#include "LSM303AGR.h"
 #include <cmath>
 #include <softPwm.h>
 class Move
