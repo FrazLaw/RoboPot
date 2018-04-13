@@ -125,5 +125,5 @@ This was implemented through use of the L298 motor driver chip which uses sepera
 
 The first was supplied from four AA Duracell Batteries connected in series to the L298 motor powersupply pins. The second was supplied from six AA batteries connected in series to the power supply PCB illustrated below. The PCB was designed to supply 5V to the Raspberry Pi 5V pin which in turn powered the sensors and motor logic supply from its 5V and 3.3V power supply pins:
 
-![alt text](https://github.com/FrazLaw/RoboPot/blob/master/Hardware/Power_Supply_Schematic.PNG)
+![alt text](https://github.com/FrazLaw/RoboPot/blob/master/Hardware/Power_Supply_Schematic.png)
 
