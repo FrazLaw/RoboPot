@@ -48,7 +48,7 @@ int main()
 			if ( Destination != Pot_Location)	//If Destination is different from present location
 			{
 				loc.Find_Path(Destination, Pot_Location); //Determine path to destination
-				if (loc.X_PathLength != 0) //if required to move in along x path
+				if (loc.No_X_Turn == 0) //if required to move in along x path
 				{
 					motors.Turn(loc.X_Bearing); //Turn to face direction of travel
 					for (int i = 0; i<loc.X_PathLength; i++)	//Move for required number of unit lengths in x direction
@@ -58,7 +58,7 @@ int main()
 						interface.Send(ToGUI, &Pot_Location); //transmit location to GUI during transit
 					}
 				}
-				if (Y_PathLength != 0)  //if required to move in along y path
+				if (loc.No_Y_Turn == 0)  //if required to move in along y path
 				{
 					motors.Turn(loc.Y_Bearing); //Turn to face direction of travel
 					for (int i = 0; i<loc.Y_PathLength; i++) //Move for required number of unit lengths in y direction
