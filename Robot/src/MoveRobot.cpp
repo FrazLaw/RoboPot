@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <fstream>
 
+//Demo Code
+
 string cmdfile = "/var/www/html/readme.txt";
 
 int main()
@@ -48,7 +50,6 @@ char Read_Cmd(const std::string& filename)
 {
 	std::ifstream file(filename.c_str());
 	file.get(cmd);
-//	remove(filename.c_str());
 	return cmd;
 }
 
