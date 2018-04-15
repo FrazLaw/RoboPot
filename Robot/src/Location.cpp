@@ -228,12 +228,12 @@ VL53L0X_Error Location::WaitMeasurementDataReady(VL53L0X_DEV Dev) {
 void Location::Find_Path(char Destination, char Pot_Start_Position)
 {
 	int Dest_x, Dest_y; //Destination coordinates
-	int Loc_x, Loc_y;	//Present Location Coordinates
+	int Start_x, Start_y;	//Start Location Coordinates
 	Find_coordinates(Destination, &Dest_x, &Dest_y);
-	Find_coordinates(Pot_Start_Position, &Loc_x, &Loc_y);
+	Find_coordinates(Pot_Start_Position, &Start_x, &Start_y);
 
-	X_PathLength = Dest_x - Loc_x;
-	Y_PathLength = Dest_y - Loc_y;
+	X_PathLength = Dest_x - Start_x;
+	Y_PathLength = Dest_y - Start_y;
 	
 	if (X_PathLength > 0)
 	{
@@ -242,10 +242,11 @@ void Location::Find_Path(char Destination, char Pot_Start_Position)
 	else if (X_PathLength < 0)
 	{
 		X_Bearing = West_Bearing;
+		X_PathLength = abs(Dest_x - Start_x);
 	}
 	else
 	{
-		X_Bearing = 0;
+		No_X_Turn = 1;
 	}
 
 	if (Y_PathLength > 0)
@@ -255,10 +256,11 @@ void Location::Find_Path(char Destination, char Pot_Start_Position)
 	else if (Y_PathLength < 0)
 	{
 		Y_Bearing = North_Bearing;
+		Y_PathLength = abs(Dest_y - Start_y);
 	}
 	else
 	{
-		Y_Bearing = 0;
+		No_Y_Turn = 1;
 	}
 }
 
