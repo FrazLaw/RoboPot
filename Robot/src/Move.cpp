@@ -16,39 +16,12 @@ void Move::Drive()
 	//Move one unit space 2m/4units= 0.5m=500mm
 	Location unit;	
 	int start_Distance = unit.Find_Proximity();		//Using LIDAR to determine forward drive distance
-	while ((unit.Find_Proximity()-start_Distance )< 50) {
-		softPwmWrite(Left_High_Motor, PWM_Set_Slow);
-		softPwmWrite(Right_High_Motor, PWM_Set_Slow);
-		softPwmWrite(Left_Low_Motor, 0);
-		softPwmWrite(Right_Low_Motor, 0);
-	}
 
-	while ((unit.Find_Proximity() - start_Distance) < 100) {
-		softPwmWrite(Left_High_Motor, PWM_Set_Medium);
-		softPwmWrite(Right_High_Motor, PWM_Set_Medium);
-		softPwmWrite(Left_Low_Motor, 0);
-		softPwmWrite(Right_Low_Motor, 0);
-	}
-
-	while ((unit.Find_Proximity() - start_Distance) < 400) {
+	while ((unit.Find_Proximity() - start_Distance) < Unit_Length) {
 		softPwmWrite(Left_High_Motor, PWM_Set_Fast);
 		softPwmWrite(Right_High_Motor, PWM_Set_Fast);
 		softPwmWrite(Left_Low_Motor, 0);
 		softPwmWrite(Right_Low_Motor, 0);
-	}
-
-	while ((unit.Find_Proximity() - start_Distance) < 450) {
-		softPwmWrite(Left_High_Motor, PWM_Set_Medium);
-		softPwmWrite(Right_High_Motor, PWM_Set_Medium);
-		softPwmWrite(Left_Low_Motor, 0);
-		softPwmWrite(Right_Low_Motor, 0);
-	}
-
-	while ((unit.Find_Proximity() - start_Distance) < 500) {
-		pwmWrite(Left_High_Motor, PWM_Set_Slow);
-		pwmWrite(Right_High_Motor, PWM_Set_Slow);
-		digitalWrite(Left_Low_Motor, 0);
-		digitalWrite(Right_Low_Motor, 0);
 	}
 
 	softPwmWrite(Left_High_Motor, PWM_Set_Stop);
