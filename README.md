@@ -6,6 +6,11 @@ Links:
 Facebook - https://www.facebook.com/ENG5220RoboPot/ <br/>
 Youtube  - https://www.youtube.com/channel/UCD5ITvIJ00v1beTOdpyzPOQ
 
+Below is a direct link to our video demonstration: </br>
+<a href="https://www.youtube.com/watch?v=LCoy7QgioFk&t
+" target="_blank"><img src="https://amberream.github.io/youtube-power-up/images/yt_icon_rgb.png" 
+alt="IMAGE ALT TEXT HERE" width="150" height="150" border="10" /></a>
+
 ### System Description
 
 Robopot allows the keen, technically minded gardener to position their beloved plants wherever they wish within the vicinity of their patio or small garden.
