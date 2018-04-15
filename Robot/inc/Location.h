@@ -12,15 +12,17 @@
 #include "LSM303AGR.h"
 
 //Location Public Variables
-extern int X_Bearing;
-extern int Y_Bearing;
-extern int X_PathLength;
-extern int Y_PathLength;
-extern int Final_Proximity;
+
 
 class Location
 {
 public:
+	int X_Bearing;
+	int Y_Bearing;
+	int X_PathLength;
+	int Y_PathLength;
+	int Final_Proximity;
+	
 	//Location Functions
 	Location();
 	~Location();
