@@ -44,7 +44,7 @@ int main()
 		if ( interface.Check_Cmd(cmdfile) == true)	//If destination is sent from GUI
 		{
 			Destination = interface.Read_Cmd(cmdfile);	//Read destination
-			//Pot_Location = loc.Find_Pot();			//Measure position
+			Pot_Location = loc.Find_Pot();			//Measure position
 			if ( Destination != Pot_Location)	//If Destination is different from present location
 			{
 				loc.Find_Path(Destination, Pot_Location); //Determine path to destination
