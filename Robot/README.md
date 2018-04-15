@@ -43,7 +43,7 @@ void GUI::Send(const std::string& filename, const std::string& message)
 
 ### Translate characters into coordinates- Location Class
 
-This function will translate the input character **ref** into the required x and y coordinates required to calculate the path to robopots destination
+This function will translate the input character **ref** into the required x and y coordinates required to calculate the path to robopots destination. For example 'A' corresponds to x =0, y=0 and P corresponds to x=3, y=3;
 ```c++
 
 const char Location_ref[4][4] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L','M', 'N', 'O', 'P' };
