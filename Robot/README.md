@@ -74,5 +74,6 @@ Reading proximity data from the STM VL53l0X is no trivial task. It requires impl
 
 The LSM303AGR was used by programming the required registers over I2C using the WiringPi library. This, in addition to performing a mathematical operation on the sensor as described [here.](https://github.com/FrazLaw/RoboPot/tree/master/Sensors/Magnetometer)
 
-### Return data from VL53L0X Proximity and from LSM303AGR Magnetometer Sensors- Location Class
+### Determine Path to reach destination- Location Class
 
+The code has an initial location of robopot already stored.
