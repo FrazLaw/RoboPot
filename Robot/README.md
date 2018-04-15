@@ -22,8 +22,8 @@ The main code calls three c++ classes and sets up one thread. The classes are Lo
 -Actuate motors</br>
 **Interface Thread**</br>
 -Display sensor data for debugging</br>
-
-### Read and write Characters from the GUI- GUI Class
+## GUI Class
+### Read and write Characters from the GUI
 
 This task is easily accomplished by and writing data to specific text files stored on the apache server which hosts the GUI interface. The C++ <fstream> standard library was used to accomplish this. <\br>
 ```c++
@@ -40,8 +40,8 @@ void GUI::Send(const std::string& filename, const std::string& message)
 	file.open(filename.c_str());
 }
 ```
-
-### Translate characters into coordinates- Location Class
+## Location Class
+### Translate characters into coordinates
 
 This function will translate the input character **ref** into the required x and y coordinates required to calculate the path to robopots destination. For example 'A' corresponds to x =0, y=0 and P corresponds to x=3, y=3;
 ```c++
@@ -68,13 +68,13 @@ void Location::Find_coordinates(char ref, int *x, int *y)
 ```
 
 
-### Return data from VL53L0X Proximity and from LSM303AGR Magnetometer Sensors- Location Class
+### Return data from VL53L0X Proximity and from LSM303AGR Magnetometer Sensors
 
 Reading proximity data from the STM VL53l0X is no trivial task. It requires implementing the use of an API specific to the sensor and compilation of the required libraries in order to make it work. In addition use of the API is itself is a challenge as many of the settings of the sensor must be set up correctly in order for any meaningfull data to be returned. As of yet there is no publication of the registers and register functions of the sensor.</br>
 
 The LSM303AGR was used by programming the required registers over I2C using the WiringPi library. This, in addition to performing a mathematical operation on the sensor as described [here.](https://github.com/FrazLaw/RoboPot/tree/master/Sensors/Magnetometer)
 
-### Determine Path to reach destination- Location Class
+### Determine Path to reach destination
 
 The code has an initial location of robopot already stored. The robot then calculates the required path for the robot to travel in using the Find_Path() function.
 
@@ -124,4 +124,67 @@ void Location::Find_Path(char Destination, char Pot_Start_Position)
 
 This is further illustrated in this video. https://youtu.be/BEZmMBXUMUo using the code from [here.](https://github.com/FrazLaw/RoboPot/tree/master/Robot/Demo_Codes)
 
+##Motor Class
+### Actuate Motors
+
+The motors can be used in conjunction with the magnetometer and proximity sensor to move around the garden by a known length or angle.
+
+To drive by a single unit length the following code is used.
+```c++
+void Move::Drive()
+{
+	//Move one unit space 2m/4units= 0.5m=500mm
+	Location unit;	
+	int start_Distance = unit.Find_Proximity();		//Using LIDAR to determine forward drive distance
+
+	while ((unit.Find_Proximity() - start_Distance) < Unit_Length) {
+		softPwmWrite(Left_High_Motor, PWM_Set_Fast);
+		softPwmWrite(Right_High_Motor, PWM_Set_Fast);
+		softPwmWrite(Left_Low_Motor, 0);
+		softPwmWrite(Right_Low_Motor, 0);
+	}
+
+	softPwmWrite(Left_High_Motor, PWM_Set_Stop);
+	softPwmWrite(Right_High_Motor, PWM_Set_Stop);
+	softPwmWrite(Left_Low_Motor, 0);
+	softPwmWrite(Right_Low_Motor, 0);
+}
+```
+To turn to within 5 degrees of the target bearing the following code is used.
+
+```c++
+void Move::Turn(int Target_Bearing) //Turns the Robot to the Target Bearing
+{
+	Location Facing;
+	LSM303AGR lsm;
+	int fd = lsm.setup();
+	int x = lsm.configure();
+	
+	int Current_Bearing = Facing.Find_Direction(fd);	//Using Magnemometer to determine turning angle
+	
+	char Turn_Direction = Turn_LeftorRight(Target_Bearing, Current_Bearing);
+	
+	if (Turn_Direction == 'R')
+	{
+		while (abs(Facing.Find_Direction(fd)-Target_Bearing)>5)
+		{
+			softPwmWrite(Left_High_Motor, PWM_Set_Medium);
+			softPwmWrite(Left_Low_Motor, 0);
+		}
+		softPwmWrite(Left_High_Motor, PWM_Set_Stop);
+		softPwmWrite(Left_Low_Motor, 0);
+	}else	
+	if (Turn_Direction == 'L')
+	{
+		while (abs(Facing.Find_Direction(fd)-Target_Bearing)>5)
+		{
+			softPwmWrite(Right_High_Motor, PWM_Set_Medium);
+			softPwmWrite(Right_Low_Motor, 0);
+		}
+		softPwmWrite(Right_High_Motor, PWM_Set_Stop);
+		softPwmWrite(Right_Low_Motor, 0);
+	}
+
+}
+```
 
