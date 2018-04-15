@@ -9,12 +9,7 @@ Location::~Location()
 {
 }
 
-int Location::Setup()
-{
-
-}
-
-char Location::Find_Pot()
+char Location::Find_Pot()	//Returns character representing location of pot
 {
 	
 	int x,y;
@@ -32,29 +27,12 @@ char Location::Find_Pot()
 	Navigate.Turn(East_Bearing);
 	Proximity_East= Check.Find_Proximity()/Unit_Length;
 	
-	Navigate.Turn(South_Bearing);
-	Proximity_South= Check.Find_Proximity()/Unit_Length;
+	x = Proximity_East;	
 	
-	Navigate.Turn(West_Bearing);
-	Proximity_West= Check.Find_Proximity()/Unit_Length;
-	
-	//Confirm x coordinate using East and West Proximity Measurements
-	if((Proximity_East + Proximity_West) == 3*Unit_Length)
-	{
-		x = Proximity_East;		
-	}
-	
-	//Confirm y coordinate using North and South Proximity Measurements
-	if((Proximity_North + Proximity_South) == 3*Unit_Length)
-	{
-		y = Proximity_North;		
-	}
+	y = Proximity_North;
 	
 	
 	return Location_ref[x][y];
-	
-
-	return 'a';
 }
 
 int Location::Find_Direction(int fd)
@@ -97,11 +75,12 @@ int Location::Find_Direction(int fd)
 
 }
 
-//Returns Proximity Data 
+//Returns Proximity Data
+//Uses STM API example which has been modified to work as function within Location Class
 int Location::Find_Proximity()
 {
 	int Final_Proximity;
-/*	VL53L0X_Error Status = VL53L0X_ERROR_NONE;
+	VL53L0X_Error Status = VL53L0X_ERROR_NONE;
 	VL53L0X_Dev_t MyDevice;
 	VL53L0X_Dev_t *pMyDevice = &MyDevice;
 //	printf("VL53L0X API Simple Ranging example FMenzies mod\n\n");
@@ -161,7 +140,7 @@ int Location::Find_Proximity()
     {
 	int Proximity=0, sumProximity=0;
         uint32_t measurement;
-        uint32_t no_of_measurements = 50;
+        uint32_t no_of_measurements = 5;
 
         uint16_t* pResults = (uint16_t*)malloc(sizeof(uint16_t) * no_of_measurements);
 
@@ -186,40 +165,9 @@ int Location::Find_Proximity()
                 break;
             }
         }
-	Final_Proximity = sumProximity/50;
-	return sumProximity/50;
+	Final_Proximity = sumProximity/50+(0.1*sumProximity);
+	return Final_Proximity;
 
-        if(Status == VL53L0X_ERROR_NONE)
-        {
-            for(measurement=0; measurement<no_of_measurements; measurement++)
-            {
-               printf("measurement %d: %d\n", measurement, *(pResults + measurement));
-            }
-        }
-
-        free(pResults);
-    }
-
-    
-    if(Status == VL53L0X_ERROR_NONE)
-    {
-//        printf ("Call of VL53L0X_StopMeasurement\n");
-        Status = VL53L0X_StopMeasurement(pMyDevice);
-    }
-
-    if(Status == VL53L0X_ERROR_NONE)
-    {
-//        printf ("Wait Stop to be competed\n");
-        Status = WaitStopCompleted(pMyDevice);
-    }
-
-    if(Status == VL53L0X_ERROR_NONE)
-	Status = VL53L0X_ClearInterruptMask(pMyDevice,
-		VL53L0X_REG_SYSTEM_INTERRUPT_GPIO_NEW_SAMPLE_READY);
-*/
-//    return Status;
-
-	return 5;
 }
 
 //  Used for Sensor API
@@ -277,7 +225,7 @@ VL53L0X_Error Location::WaitMeasurementDataReady(VL53L0X_DEV Dev) {
     return Status;
 }
 
-
+//Sets variables which decide how many gridspaces to move in x and y directions and number of turns to face required directions
 void Location::Find_Path(char Destination, char Pot_Start_Position)
 {
 	int Dest_x, Dest_y; //Destination coordinates
@@ -315,6 +263,7 @@ void Location::Find_Path(char Destination, char Pot_Start_Position)
 	}
 }
 
+//Converts character in Location_ref to x and y coordinates
 void Location::Find_coordinates(char ref, int *x, int *y)
 {
 	int i, j;
@@ -330,9 +279,4 @@ void Location::Find_coordinates(char ref, int *x, int *y)
 			}
 		}
 	}
-}
-
-int Location::Round_Proximity(int Proximity, int Multiple)
-{	
-	return ((Proximity+Multiple/2)/Multiple)*Multiple;
 }
