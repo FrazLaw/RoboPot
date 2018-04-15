@@ -124,7 +124,7 @@ void Location::Find_Path(char Destination, char Pot_Start_Position)
 
 This is further illustrated in this video. https://youtu.be/BEZmMBXUMUo using the code from [here.](https://github.com/FrazLaw/RoboPot/tree/master/Robot/Demo_Codes)
 
-##Motor Class
+## Motor Class
 ### Actuate Motors
 
 The motors can be used in conjunction with the magnetometer and proximity sensor to move around the garden by a known length or angle.
