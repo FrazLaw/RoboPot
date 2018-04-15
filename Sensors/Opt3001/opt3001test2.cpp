@@ -81,7 +81,7 @@ int main (){
 	opt3001 opt3001a;
 
 	//transfer command, set IP addresses and directories
-	strcpy( command, "scp -r /home/pi/Code/opt3001/lightdata teamrobopot@192.168.43.112:/home/teamrobopot/Documents" );
+	strcpy( command, "scp -r /home/pi/Code/opt3001/lightdata teamrobopot@192.168.0.42:/var/www/html" );
 
 	//setup wiringPiI2C with all sensors
 	opt3001a.setup();
