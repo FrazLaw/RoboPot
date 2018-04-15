@@ -114,7 +114,7 @@ int Move::Initialise() 		//Initialises wiringPi
 
 }
 
-char Move::Turn_LeftorRight(int Target_Bearing, int Current_Bearing)
+char Move::Turn_LeftorRight(int Target_Bearing, int Current_Bearing) //Returns whether left or right is shortest distance to target bearing
 {
 	
 	int a = Target_Bearing-Current_Bearing;
