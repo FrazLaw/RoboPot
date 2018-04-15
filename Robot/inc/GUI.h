@@ -12,8 +12,6 @@ class GUI
 public:
 	GUI();
 	~GUI();
-	//Setup and Initialisation of GUI
-	int Setup();
 	//Confirms if GUI has sent command
 	bool Check_Cmd(const std::string& filename);
 	//returns input from GUI
