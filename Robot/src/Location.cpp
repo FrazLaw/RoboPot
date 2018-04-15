@@ -231,7 +231,9 @@ void Location::Find_Path(char Destination, char Pot_Start_Position)
 	int Start_x, Start_y;	//Start Location Coordinates
 	Find_coordinates(Destination, &Dest_x, &Dest_y);
 	Find_coordinates(Pot_Start_Position, &Start_x, &Start_y);
-
+	
+	No_X_Turn = 0;
+	No_Y_Turn = 0;
 	X_PathLength = Dest_x - Start_x;
 	Y_PathLength = Dest_y - Start_y;
 	
