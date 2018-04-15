@@ -1,8 +1,0 @@
-<?php
-	$myfile = fopen("readme.txt", "w") or die("unable to open file!");
-	$txt = "A";
-	fwrite($myfile, $txt);
-	fclose($myfile);
-?>
-
-//puts character into text file in memory directory. This can be translated to position in the garden.
