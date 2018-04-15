@@ -22,6 +22,8 @@ public:
 	int X_PathLength;
 	int Y_PathLength;
 	int Final_Proximity;
+	int No_X_Turn;
+	int No_Y_Turn;
 	
 	//Location Functions
 	Location();
