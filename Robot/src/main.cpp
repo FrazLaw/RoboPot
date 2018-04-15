@@ -44,7 +44,6 @@ int main()
 		if ( interface.Check_Cmd(cmdfile) == true)	//If destination is sent from GUI
 		{
 			Destination = interface.Read_Cmd(cmdfile);	//Read destination
-			Pot_Location = loc.Find_Pot();			//Measure position
 			if ( Destination != Pot_Location)	//If Destination is different from present location
 			{
 				loc.Find_Path(Destination, Pot_Location); //Determine path to destination
@@ -54,8 +53,6 @@ int main()
 					for (int i = 0; i<loc.X_PathLength; i++)	//Move for required number of unit lengths in x direction
 					{
 						motors.Drive();
-						Pot_Location = loc.Find_Pot(); 	
-						interface.Send(ToGUI, &Pot_Location); //transmit location to GUI during transit
 					}
 				}
 				if (loc.No_Y_Turn == 0)  //if required to move in along y path
@@ -64,10 +61,10 @@ int main()
 					for (int i = 0; i<loc.Y_PathLength; i++) //Move for required number of unit lengths in y direction
 					{
 						motors.Drive();
-						Pot_Location = loc.Find_Pot();
-						interface.Send(ToGUI, &Pot_Location); //transmit location to GUI during transit
 					}
 				}
+				Pot_Location = Destination;
+				interface.Send(ToGUI, &Pot_Location); //transmit location to GUI during transit
 			}
 		}
 	}//Close while loop
