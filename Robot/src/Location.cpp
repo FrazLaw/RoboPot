@@ -39,39 +39,38 @@ int Location::Find_Direction(int fd)
 {
 
 	LSM303AGR lsm;
-//	lsm.configure();
-//	lsm.setup();
-			int sum = 0;
-			float average = 0;
-			float compass[10];
-			float direction; //compass coordingate
+	
+	int sum = 0;
+	float average = 0;
+	float compass[10];
+	float direction; //compass coordingate
 
-			for (int j = 0; j < 10; j++){//number of averages, 10 seems to be max
+	for (int j = 0; j < 10; j++){//number of averages, 10 seems to be max
 
-				float x = lsm.readCh1(fd)-307;//to centre the plot around 0. It performs as expected with few errors
-				float y = lsm.readCh2(fd);
-				float coord = x/y;
+		float x = lsm.readCh1(fd)-307;//to centre the plot around 0. It performs as expected with few errors
+		float y = lsm.readCh2(fd);
+		float coord = x/y;
 
-				if (y > 0){
-					direction = 90 - atan(coord)*(180/PI);
-					compass[j] = direction;
-				} else if (y < 0){
-					direction = 270 - atan(coord)*(180/PI);
-					compass[j] = direction;
-				} else if (y == 0 && x < 0){
-					direction = 180;
-					compass[j] = direction;
-				} else if (y == 0 && x > 0){
-					direction = 0;
-					compass[j] = direction;
-				} else {
-//					printf("Direction = error\n");
-				}
-				sum += compass[j];
-			}
-		average = sum/10;
+		if (y > 0){
+			direction = 90 - atan(coord)*(180/PI);
+			compass[j] = direction;
+		} else if (y < 0){
+			direction = 270 - atan(coord)*(180/PI);
+			compass[j] = direction;
+		} else if (y == 0 && x < 0){
+			direction = 180;
+			compass[j] = direction;
+		} else if (y == 0 && x > 0){
+			direction = 0;
+			compass[j] = direction;
+		} else {
+//			printf("Direction = error\n");
+		}
+		sum += compass[j];
+	}
+	average = sum/10;
 
-		return average;
+	return average;
 
 }
 
