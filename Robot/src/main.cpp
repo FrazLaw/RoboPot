@@ -48,10 +48,10 @@ int main()
 			if ( Destination != Pot_Location)	//If Destination is different from present location
 			{
 				loc.Find_Path(Destination, Pot_Location); //Determine path to destination
-				if (X_PathLength != 0) //if required to move in along x path
+				if (loc.X_PathLength != 0) //if required to move in along x path
 				{
-					motors.Turn(X_Bearing); //Turn to face direction of travel
-					for (int i = 0; i<X_PathLength; i++)	//Move for required number of unit lengths in x direction
+					motors.Turn(loc.X_Bearing); //Turn to face direction of travel
+					for (int i = 0; i<loc.X_PathLength; i++)	//Move for required number of unit lengths in x direction
 					{
 						motors.Drive();
 						Pot_Location = loc.Find_Pot(); 	
@@ -60,8 +60,8 @@ int main()
 				}
 				if (Y_PathLength != 0)  //if required to move in along y path
 				{
-					motors.Turn(Y_Bearing); //Turn to face direction of travel
-					for (int i = 0; i<Y_PathLength; i++) //Move for required number of unit lengths in y direction
+					motors.Turn(loc.Y_Bearing); //Turn to face direction of travel
+					for (int i = 0; i<loc.Y_PathLength; i++) //Move for required number of unit lengths in y direction
 					{
 						motors.Drive();
 						Pot_Location = loc.Find_Pot();
