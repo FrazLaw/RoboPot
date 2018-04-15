@@ -76,4 +76,52 @@ The LSM303AGR was used by programming the required registers over I2C using the 
 
 ### Determine Path to reach destination- Location Class
 
-The code has an initial location of robopot already stored.
+The code has an initial location of robopot already stored. The robot then calculates the required path for the robot to travel in using the Find_Path() function.
+
+```c++
+
+void Location::Find_Path(char Destination, char Pot_Start_Position)
+{
+	int Dest_x, Dest_y; //Destination coordinates
+	int Start_x, Start_y;	//Start Location Coordinates
+	Find_coordinates(Destination, &Dest_x, &Dest_y);
+	Find_coordinates(Pot_Start_Position, &Start_x, &Start_y);
+	
+	No_X_Turn = 0;
+	No_Y_Turn = 0;
+	X_PathLength = Dest_x - Start_x;
+	Y_PathLength = Dest_y - Start_y;
+	
+	if (X_PathLength > 0)
+	{
+		X_Bearing = East_Bearing;
+	}
+	else if (X_PathLength < 0)
+	{
+		X_Bearing = West_Bearing;
+		X_PathLength = abs(Dest_x - Start_x);
+	}
+	else
+	{
+		No_X_Turn = 1;
+	}
+
+	if (Y_PathLength > 0)
+	{
+		Y_Bearing = South_Bearing;
+	}
+	else if (Y_PathLength < 0)
+	{
+		Y_Bearing = North_Bearing;
+		Y_PathLength = abs(Dest_y - Start_y);
+	}
+	else
+	{
+		No_Y_Turn = 1;
+	}
+}
+```
+
+This is further illustrated in this video. https://youtu.be/BEZmMBXUMUo using the code from [here.](https://github.com/FrazLaw/RoboPot/tree/master/Robot/Demo_Codes)
+
+
