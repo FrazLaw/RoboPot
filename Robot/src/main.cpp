@@ -37,7 +37,7 @@ int main()
 
 	motors.Initialise(); //Initialise Motors
 	
-	std::thread ID_Interface(Interface); //Initialise Interface thread
+	std::thread ID_Interface(Interface); //Initialise thread which displays sensor values
 
 	while (1)
 	{
